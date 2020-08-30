@@ -5,6 +5,16 @@ import { AppComponent } from './app.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { HttpClientModule } from '@angular/common/http'; 
 import { ProductService } from './services/product.service'; 
+import { Routes, RouterModule } from '@angular/router'; 
+
+//define Routes, order of routes do matter, start from specific to generic
+const routes: Routes = [
+  {path: 'category/:id', component: ProductListComponent}, //component name used what is declared in line 5
+  {path: 'category', component: ProductListComponent},
+  {path: 'products', component: ProductListComponent},
+  {path: '', redirectTo: '/products', pathMatch: 'full'},
+  {path: '**', redirectTo: '/products', pathMatch: 'full'}
+]
 
 @NgModule({
   declarations: [
@@ -12,6 +22,7 @@ import { ProductService } from './services/product.service';
     ProductListComponent
   ],
   imports: [
+    RouterModule.forRoot(routes), //routes defined at line 11
     BrowserModule,
     HttpClientModule
   ],
