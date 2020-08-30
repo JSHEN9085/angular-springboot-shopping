@@ -717,6 +717,10 @@ table.table.table-bordered th{
 .detail-section{
     margin-top:60px
 }
+
+.detail-img{
+    width: 30%; 
+}
 /**/
 
 /* 
@@ -1029,4 +1033,6 @@ footer ul li{
         border:0;
         padding:8px 0
     }
+
+    
 }

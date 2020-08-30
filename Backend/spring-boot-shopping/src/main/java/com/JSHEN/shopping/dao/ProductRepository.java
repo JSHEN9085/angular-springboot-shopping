@@ -18,4 +18,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     //Spring will execute query like Select * from product where category_id = parameter passed from frontend
     //url example http://localhost:8080/api/products/search/findByCategoryId?id=1
     //in frontend, id is passed from services/product.service.ts getProductList() method
+
+    Page<Product> findByNameContaining(@RequestParam("name") String name, Pageable pageable);
+    //url example http://localhost:8080/api/products/search/findByNameContaining?name=python, searching with name "python"
 }
