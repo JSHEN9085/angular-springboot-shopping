@@ -8,8 +8,8 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ProductService {
-
   private baseUrl = 'http://localhost:8080/api/products'; 
+  // private baseUrl = 'http://localhost:8080/api/products?size=100'; //if want to fetch 100, by default Spring Boot only return first 20 items
 
   constructor(private httpClient : HttpClient) { }
 
