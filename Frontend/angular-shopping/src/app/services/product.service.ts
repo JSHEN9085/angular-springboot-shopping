@@ -20,7 +20,7 @@ export class ProductService {
   constructor(private httpClient : HttpClient) { }
 
   private getProducts(searchUrl: string): Observable<Product[]> {
-    return this.httpClient.get<GetResponseProduct>(searchUrl).pipe(
+    return this.httpClient.get<GetResponseProducts>(searchUrl).pipe(
       map(response => response._embedded.products)
     );
   }
@@ -33,6 +33,14 @@ export class ProductService {
     // ); this portion refactored as method getProducts(searchUrl)
   }
 
+  getProductListPaginate(pageNumber: number, size: number, categoryId: number): Observable<GetResponseProducts> {
+    //build URL, limit the output per page for products that under the same category
+    //pageNumber is the current page, size is items per page
+    const searchUrl=`${this.baseUrl}/search/findByCategoryId?id=${categoryId}`
+                     + `&page=${pageNumber}&size=${size}`; 
+    return this.httpClient.get<GetResponseProducts>(searchUrl); 
+  }
+
   searchProducts(keyword: string): Observable<Product[]> {
     //build url based on http://localhost:8080/api/products/search/findByNameContaining?name=python
     const searchUrl=`${this.baseUrl}/search/findByNameContaining?name=${keyword}`; 
@@ -40,6 +48,12 @@ export class ProductService {
     // return this.httpClient.get<GetResponseProduct>(searchUrl).pipe(
     //   map(response => response._embedded.products)
     // ); this portion refactored as method getProducts(searchUrl)
+  }
+
+  searchProductsPaginate(pageNumber: number, size: number, keyword: string): Observable<GetResponseProducts> {
+    const searchUrl=`${this.baseUrl}/search/findByNameContaining?name=${keyword}`
+                     + `&page=${pageNumber}&size=${size}`; 
+    return this.httpClient.get<GetResponseProducts>(searchUrl); 
   }
 
   getProduct(productId: number): Observable<Product> {
@@ -56,9 +70,15 @@ export class ProductService {
 }
 
 //interface is used to unwrap the JSON from Spring Data REST _embedded entity
-interface GetResponseProduct {
+interface GetResponseProducts {
   _embedded: {
     products: Product[]; 
+  }, 
+  page: {
+    size: number, //how many items backed returned
+    totalElements: number, //how many items in database
+    totalPages : number,  //equals to totalElements/size
+    number : number //current page #, from Spring, page is index base, so 0 means first page
   }
 }
 
