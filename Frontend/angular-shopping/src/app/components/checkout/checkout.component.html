@@ -46,8 +46,10 @@
                         <div class="col-md-2"> <label>Country</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
-                                <select formControlName="country">
-                                    <option></option>
+                                <select formControlName="country" (change)="getStates('shippingAddress')">
+                                    <option *ngFor="let country of countries" [ngValue]="country">
+                                        {{country.name}}
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -76,7 +78,9 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <select formControlName="state">
-                                    <option></option>
+                                    <option *ngFor="let state of shippingAddressStates" [ngValue]="state">
+                                        {{state.name}}
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -96,7 +100,7 @@
                 <!-- checkbox: if billing address is same as shipping address -->
                 <div class="input-space">
                     <label class="au-checkbox">
-                        <input type="checkbox" (change)="copyShippingToBillingAddress($event)">
+                        <input type="checkbox" (change)="copyShippingAddressToBillingAddress($event)">
                         <span class="au-checkmark"></span> Billing Address is same as Shipping Address
                     </label>
                 </div>
@@ -110,8 +114,10 @@
                         <div class="col-md-2"> <label>Country</label></div>
                         <div class="col-md-9">
                             <div class="input-space">
-                                <select formControlName="country">
-                                    <option></option>
+                                <select formControlName="country" (change)="getStates('billingAddress')">
+                                    <option *ngFor="let country of countries" [ngValue]="country">
+                                        {{country.name}}
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -140,7 +146,9 @@
                         <div class="col-md-9">
                             <div class="input-space">
                                 <select formControlName="state">
-                                    <option></option>
+                                    <option *ngFor="let state of billingAddressStates" [ngValue]="state">
+                                        {{state.name}}
+                                    </option>
                                 </select>
                             </div>
                         </div>
